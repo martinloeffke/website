@@ -1,90 +1,179 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Martin Loeffke – Website</title>
-    <meta name="description" content="Eine moderne, einfache Website für dein neues Projekt." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="hero-shell">
-      <nav class="nav container">
-        <a class="brand" href="#top">martinloeffke</a>
-        <a class="nav-link" href="#about">Über uns</a>
-        <a class="nav-link" href="#features">Leistungen</a>
-        <a class="nav-link" href="#contact">Kontakt</a>
-      </nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martin Löffke — Malerei</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="#top">Martin Löffke</a>
+    <ul class="nav-links">
+      <li><a href="#arbeiten">Arbeiten</a></li>
+      <li><a href="#ueber">Über</a></li>
+      <li><a href="#kaufen">Kaufen</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
 
-      <section class="hero container" id="top">
-        <div>
-          <p class="eyebrow">Website installierbar · lokal bereit</p>
-          <h1>Deine neue Website ist jetzt im Ordner vorbereitet.</h1>
-          <p class="lead">
-            Dieser Startpunkt ist simpel, modern und direkt im Browser aufrufbar.
-            Du kannst ihn später mit deinem eigenen Inhalt, Branding und Seitenstruktur erweitern.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#contact">Kontakt aufnehmen</a>
-            <a class="btn btn-secondary" href="#features">Mehr erfahren</a>
-          </div>
+  <section class="hero" id="top">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Malerei &amp; Zeichnung</p>
+      <h1 class="hero-title">Martin<br><em class="name-last">Löffke</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Originale und Drucke. Jedes Werk entsteht in der Stille des Ateliers und trägt die Zeit seiner Entstehung in sich.</p>
+      <a class="btn-primary" href="#arbeiten">Arbeiten ansehen</a>
+    </div>
+    <div class="hero-image">
+      <div class="hero-canvas">
+        <span class="hero-canvas-label">→ Hier das stärkste Werk einfügen</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="arbeiten">
+    <div class="section-header">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">Aktuelle Arbeiten</h2>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="alle">Alle</button>
+      <button class="filter-btn" data-filter="malerei">Malerei</button>
+      <button class="filter-btn" data-filter="zeichnung">Zeichnung</button>
+    </div>
+
+    <div class="gallery-grid">
+      <article class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#d0d0d0;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Ohne Titel I</span>
+          <span class="gallery-label-meta">Öl auf Leinwand · 80 × 100 cm · 2024</span>
         </div>
-        <aside class="card highlight-card">
-          <p class="mini-label">Aktueller Status</p>
-          <h2>Starter-Website</h2>
-          <ul>
-            <li>Responsive Layout</li>
-            <li>Einfach anpassbar</li>
-            <li>Ohne zusätzliche Build-Tools</li>
-          </ul>
-        </aside>
-      </section>
-    </header>
+      </article>
+      <article class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#b8b8b8;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Stille I</span>
+          <span class="gallery-label-meta">Öl auf Leinwand · 50 × 70 cm · 2024</span>
+        </div>
+      </article>
+      <article class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#e8e8e8;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Licht von Norden</span>
+          <span class="gallery-label-meta">Öl auf Holz · 60 × 80 cm · 2023</span>
+        </div>
+      </article>
+      <article class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#f0f0f0;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Studie III</span>
+          <span class="gallery-label-meta">Kohle auf Bütten · 40 × 60 cm · 2024</span>
+        </div>
+      </article>
+      <article class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#c8c8c8;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Abend</span>
+          <span class="gallery-label-meta">Tusche auf Papier · 100 × 120 cm · 2023</span>
+        </div>
+      </article>
+      <article class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+        <div class="gallery-placeholder" style="background:#e0e0e0;"></div>
+        <div class="gallery-label">
+          <span class="gallery-label-title">Figur II</span>
+          <span class="gallery-label-meta">Bleistift · 30 × 42 cm · 2024</span>
+        </div>
+      </article>
+    </div>
+  </section>
 
-    <main class="container stack">
-      <section class="card" id="about">
-        <p class="mini-label">Über das Projekt</p>
-        <h2>Sauber, modern und schnell startbar</h2>
-        <p>
-          Diese Seite ist als lokaler Starter für dein Repository gedacht. Sie enthält die Grundstruktur,
-          Styling und Inhalte, damit du direkt loslegen kannst.
-        </p>
-      </section>
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">Schließen ✕</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
 
-      <section class="grid" id="features">
-        <article class="card">
-          <h3>Design</h3>
-          <p>Klare Struktur, gute Lesbarkeit und modern wirkende Cards.</p>
-        </article>
-        <article class="card">
-          <h3>Flexibel</h3>
-          <p>Du kannst Inhalte, Farben und Texte ohne großen Aufwand anpassen.</p>
-        </article>
-        <article class="card">
-          <h3>Bereit zum Weiterbauen</h3>
-          <p>Perfekt als Basis für weitere Seiten, Blog oder Portfolio.</p>
-        </article>
-      </section>
+  <section id="ueber">
+    <div class="about-portrait">
+      <div class="about-portrait-placeholder">
+        <span style="color:#333; font-family:var(--font-disp); font-style:italic; font-size:0.85rem;">Portrait</span>
+      </div>
+      <div class="portrait-frame"></div>
+    </div>
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-label">Über mich</span>
+        <h2 class="section-title">Martin Löffke</h2>
+      </div>
+      <p>→ Diesen Text durch die echte Bio ersetzen. Hier steht, wer du bist, wie du arbeitest, was dich antreibt.</p>
+      <p>Ausstellungen, Stationen, Einflüsse — so kurz oder lang wie es sich richtig anfühlt.</p>
+    </div>
+  </section>
 
-      <section class="card" id="contact">
-        <p class="mini-label">Kontakt</p>
-        <h2>Bereit für den nächsten Schritt?</h2>
-        <p>
-          Öffne die Datei im Browser, passe den Text an und ergänze deine Inhalte. Falls du später ein
-          Framework wie Next.js oder Vite möchtest, kann ich das Projekt anschließend ebenfalls aufsetzen.
-        </p>
-        <a class="btn btn-primary" href="mailto:hello@example.com">hello@example.com</a>
-      </section>
-    </main>
+  <section id="kaufen">
+    <div class="section-header">
+      <span class="section-label">Kaufen</span>
+      <h2 class="section-title">Originale &amp; Drucke</h2>
+    </div>
 
-    <footer class="footer container">© 2026 martinloeffke</footer>
+    <p class="shop-intro">Alle Originale sind Einzelstücke. Drucke werden in kleinen signierten Auflagen herausgegeben. Anfragen per Mail — ich antworte persönlich, meist innerhalb eines Tages.</p>
 
-    <script src="script.js"></script>
-  </body>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-card-image"><div class="shop-card-placeholder"></div></div>
+        <div class="shop-card-body">
+          <div class="shop-card-title">Ohne Titel I</div>
+          <div class="shop-card-details">Original · Öl auf Leinwand · 80 × 100 cm</div>
+          <div class="shop-card-price">1.800 €</div>
+          <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Ohne%20Titel%20I&body=Hallo%20Martin%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20das%20Werk%20%22Ohne%20Titel%20I%22.%0A%0A">Anfragen</a>
+        </div>
+      </article>
+      <article class="shop-card">
+        <div class="shop-card-image"><div class="shop-card-placeholder"></div></div>
+        <div class="shop-card-body">
+          <div class="shop-card-title">Stille I — Druck</div>
+          <div class="shop-card-details">Giclée · signiert · Auflage 30 · 50 × 70 cm</div>
+          <div class="shop-card-price">180 €</div>
+          <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Stille%20I%20Druck&body=Hallo%20Martin%2C%0A%0Aich%20m%C3%B6chte%20gerne%20einen%20Druck%20von%20%22Stille%20I%22%20bestellen.%0A%0A">Anfragen</a>
+        </div>
+      </article>
+      <article class="shop-card">
+        <div class="shop-card-image"><div class="shop-card-placeholder"></div></div>
+        <div class="shop-card-body">
+          <div class="shop-card-title">Licht von Norden</div>
+          <div class="shop-card-details">Original · Öl auf Holz · 60 × 80 cm</div>
+          <div class="shop-card-price">1.200 €</div>
+          <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Licht%20von%20Norden&body=Hallo%20Martin%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20das%20Werk%20%22Licht%20von%20Norden%22.%0A%0A">Anfragen</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="shop-note">
+      <strong>Kein Onlineshop nötig.</strong> Anfragen kommen direkt per Mail — persönlich, unkompliziert, kostenlos. Versand und Zahlung werden individuell abgestimmt.
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="section-header">
+      <span class="section-label">Kontakt</span>
+      <h2 class="section-title">Schreib mir.</h2>
+    </div>
+    <p class="kontakt-sub">Anfragen zu Werken, Ausstellungen, Auftragsarbeiten oder Atelierbesuchen — ich freue mich über jede Nachricht.</p>
+    <div class="kontakt-links">
+      <a class="kontakt-link" href="mailto:martin@email.de">Per Mail</a>
+      <a class="kontakt-link" href="https://instagram.com/martin_loeffke" target="_blank">Instagram</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 Martin Löffke</span>
+    <span>Alle Rechte vorbehalten</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
