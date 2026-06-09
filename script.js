@@ -8,13 +8,16 @@ function matchTitleWidth() {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  ctx.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const fontSize = Math.ceil(parseFloat(style.fontSize) || 0);
+  ctx.font = `${style.fontStyle || 'normal'} ${style.fontWeight || '400'} ${fontSize}px ${style.fontFamily}`;
   const wMartin = ctx.measureText('Martin').width;
   const wLoeffke = ctx.measureText('Löffke').width;
   const diff = wMartin - wLoeffke;
 
   if (diff > 0 && wLoeffke > 0) {
-    last.style.letterSpacing = `${diff / 5}px`;
+    last.style.letterSpacing = `${Math.max(0, diff / 5)}px`;
+  } else {
+    last.style.letterSpacing = '';
   }
 }
 
@@ -22,6 +25,7 @@ if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(matchTitleWidth);
 }
 window.addEventListener('resize', matchTitleWidth);
+window.addEventListener('load', matchTitleWidth);
 
 const filterButtons = document.querySelectorAll('.filter-btn');
 filterButtons.forEach((btn) => {

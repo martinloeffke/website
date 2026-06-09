@@ -19,6 +19,12 @@ body {
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+section {
+  scroll-margin-top: 5rem;
 }
 
 nav {
@@ -514,16 +520,38 @@ footer {
 
 .lightbox-close:hover { color: var(--white); }
 
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    border-right: none;
+    border-bottom: 1px solid var(--light);
+  }
+
+  .hero-image {
+    min-height: 50vh;
+  }
+}
+
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  .hero { grid-template-columns: 1fr; }
-  .hero-text { border-right: none; border-bottom: 1px solid var(--light); padding: 3rem 1.5rem; }
+  nav {
+    padding: 1rem 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero-text { padding: 3rem 1.2rem; }
   .hero-image { min-height: 60vw; }
-  #arbeiten, #kaufen, #kontakt { padding: 4rem 1.5rem; }
-  #ueber { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+  #arbeiten, #kaufen, #kontakt { padding: 4rem 1.2rem; }
+  #ueber { grid-template-columns: 1fr; padding: 4rem 1.2rem; gap: 3rem; }
   .about-portrait { display: none; }
-  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
