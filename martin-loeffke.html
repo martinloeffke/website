@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martin Löffke — Malerei</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0a0a0a;
+      --white:   #ffffff;
+      --near-white: #f7f7f7;
+      --light:   #e8e8e8;
+      --mid:     #999999;
+      --dark:    #333333;
+      --font-disp: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+    }
+
+    .nav-logo {
+      font-family: var(--font-disp);
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 3rem;
+      border-right: 1px solid var(--light);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-disp);
+      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title .name-last {
+      display: block;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-divider {
+      width: 2rem;
+      height: 1px;
+      background: var(--black);
+      margin-bottom: 2rem;
+    }
+
+    .hero-sub {
+      max-width: 32ch;
+      color: var(--dark);
+      font-weight: 300;
+      line-height: 1.85;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+      width: fit-content;
+    }
+
+    .btn-primary:hover { background: var(--dark); }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      background: var(--near-white);
+    }
+
+    .hero-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-canvas {
+      width: 100%; height: 100%;
+      background: var(--near-white);
+      display: flex; align-items: flex-end; padding: 2rem;
+    }
+
+    .hero-canvas-label {
+      font-family: var(--font-disp);
+      font-style: italic;
+      color: var(--mid);
+      font-size: 0.82rem;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .section-title {
+      font-family: var(--font-disp);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+    /* ── GALLERY ── */
+    #arbeiten {
+      padding: 6rem 3rem;
+    }
+
+    .filter-bar {
+      display: flex; gap: 0; flex-wrap: wrap;
+      margin-bottom: 3rem;
+      border: 1px solid var(--light);
+      width: fit-content;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      border-right: 1px solid var(--light);
+      background: transparent;
+      color: var(--mid);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:last-child { border-right: none; }
+
+    .filter-btn:hover { color: var(--black); background: var(--near-white); }
+
+    .filter-btn.active {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--light);
+      border: 1px solid var(--light);
+    }
+
+    /* SIGNATURE ELEMENT: title slides up from bottom on hover */
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/5;
+      background: var(--white);
+    }
+
+    .gallery-item img,
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:hover .gallery-placeholder { transform: scale(1.02); }
+
+    /* Signature: full-width overlay slides up */
+    .gallery-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      padding: 1rem 1.2rem 1.2rem;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .gallery-item:hover .gallery-label {
+      transform: translateY(0);
+    }
+
+    .gallery-label-title {
+      font-family: var(--font-disp);
+      font-style: italic;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .gallery-label-meta {
+      font-size: 0.67rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      display: block;
+      text-transform: uppercase;
+    }
+
+    /* ── ABOUT ── */
+    #ueber {
+      padding: 6rem 3rem;
+      background: var(--black);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    #ueber .section-title { color: var(--white); }
+    #ueber .section-label { color: var(--mid); }
+    #ueber .section-header { border-bottom-color: #333; }
+
+    .about-text p {
+      color: rgba(255,255,255,0.6);
+      line-height: 1.95;
+      font-weight: 300;
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait img,
+    .about-portrait-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-portrait-placeholder {
+      background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .portrait-frame {
+      position: absolute;
+      top: 1.2rem; left: 1.2rem; right: -1.2rem; bottom: -1.2rem;
+      border: 1px solid #333;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ── SHOP / KAUFEN ── */
+    #kaufen {
+      padding: 6rem 3rem;
+      background: var(--near-white);
+    }
+
+    .shop-intro {
+      max-width: 52ch;
+      color: var(--dark);
+      line-height: 1.85;
+      font-weight: 300;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+    }
+
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .shop-card {
+      display: flex; flex-direction: column;
+      background: var(--white);
+      padding: 0;
+    }
+
+    .shop-card-image {
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+
+    .shop-card-image img,
+    .shop-card-placeholder {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .shop-card-placeholder { background: var(--light); }
+
+    .shop-card:hover .shop-card-image img,
+    .shop-card:hover .shop-card-placeholder { transform: scale(1.03); }
+
+    .shop-card-body {
+      padding: 1.2rem;
+      border: 1px solid var(--light);
+      border-top: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shop-card-title {
+      font-family: var(--font-disp);
+      font-size: 1.05rem;
+      font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+
+    .shop-card-details {
+      font-size: 0.7rem;
+      color: var(--mid);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      flex: 1;
+    }
+
+    .shop-card-price {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-anfrage {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--black);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: all 0.15s;
+      width: fit-content;
+    }
+
+    .btn-anfrage:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .shop-note {
+      margin-top: 3rem;
+      padding: 1.5rem 2rem;
+      border-left: 1px solid var(--black);
+      background: var(--white);
+      font-size: 0.82rem;
+      color: var(--dark);
+      line-height: 1.75;
+    }
+
+    /* ── KONTAKT ── */
+    #kontakt {
+      padding: 6rem 3rem;
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+    }
+
+    #kontakt .section-header { border-bottom-color: #333; justify-content: center; }
+    #kontakt .section-title { color: var(--white); font-size: clamp(2.5rem, 5vw, 5rem); }
+    #kontakt .section-label { color: var(--mid); }
+
+    .kontakt-sub {
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      font-size: 0.9rem;
+      margin: 1.5rem auto 3rem;
+      max-width: 42ch;
+      line-height: 1.85;
+    }
+
+    .kontakt-links {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+
+    .kontakt-link {
+      padding: 0.8rem 2rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .kontakt-link:hover {
+      border-color: var(--white);
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--black);
+      border-top: 1px solid #1a1a1a;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.97);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      color: rgba(255,255,255,0.4); font-size: 1.2rem; cursor: pointer;
+      background: none; border: none;
+      letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-text { border-right: none; border-bottom: 1px solid var(--light); padding: 3rem 1.5rem; }
+      .hero-image { min-height: 60vw; }
+      #arbeiten, #kaufen, #kontakt { padding: 4rem 1.5rem; }
+      #ueber { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      .about-portrait { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-label { transition: none; }
+      .gallery-item img, .gallery-placeholder { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top">Martin Löffke</a>
+  <ul class="nav-links">
+    <li><a href="#arbeiten">Arbeiten</a></li>
+    <li><a href="#ueber">Über</a></li>
+    <li><a href="#kaufen">Kaufen</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Malerei &amp; Zeichnung</p>
+    <h1 class="hero-title">Martin<br><em class="name-last">Löffke</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Originale und Drucke. Jedes Werk entsteht in der Stille des Ateliers und trägt die Zeit seiner Entstehung in sich.</p>
+    <a class="btn-primary" href="#arbeiten">Arbeiten ansehen</a>
+  </div>
+  <div class="hero-image">
+    <!-- BILD ERSETZEN: <img src="hauptwerk.jpg" alt="Martin Löffke"> -->
+    <div class="hero-canvas">
+      <span class="hero-canvas-label">→ Hier das stärkste Werk einfügen</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="arbeiten">
+  <div class="section-header">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title">Aktuelle Arbeiten</h2>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="alle">Alle</button>
+    <button class="filter-btn" data-filter="malerei">Malerei</button>
+    <button class="filter-btn" data-filter="zeichnung">Zeichnung</button>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- WERK 1 – Bild: <img src="werk1.jpg" alt="Ohne Titel I"> -->
+    <div class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#d0d0d0;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Ohne Titel I</span>
+        <span class="gallery-label-meta">Öl auf Leinwand · 80 × 100 cm · 2024</span>
+      </div>
+    </div>
+    <!-- WERK 2 -->
+    <div class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#b8b8b8;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Stille I</span>
+        <span class="gallery-label-meta">Öl auf Leinwand · 50 × 70 cm · 2024</span>
+      </div>
+    </div>
+    <!-- WERK 3 -->
+    <div class="gallery-item" data-category="malerei" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#e8e8e8;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Licht von Norden</span>
+        <span class="gallery-label-meta">Öl auf Holz · 60 × 80 cm · 2023</span>
+      </div>
+    </div>
+    <!-- WERK 4 -->
+    <div class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#f0f0f0;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Studie III</span>
+        <span class="gallery-label-meta">Kohle auf Bütten · 40 × 60 cm · 2024</span>
+      </div>
+    </div>
+    <!-- WERK 5 -->
+    <div class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#c8c8c8;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Abend</span>
+        <span class="gallery-label-meta">Tusche auf Papier · 100 × 120 cm · 2023</span>
+      </div>
+    </div>
+    <!-- WERK 6 -->
+    <div class="gallery-item" data-category="zeichnung" onclick="openLightbox(this)">
+      <div class="gallery-placeholder" style="background:#e0e0e0;"></div>
+      <div class="gallery-label">
+        <span class="gallery-label-title">Figur II</span>
+        <span class="gallery-label-meta">Bleistift · 30 × 42 cm · 2024</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">Schließen ✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ÜBER -->
+<section id="ueber">
+  <div class="about-portrait">
+    <!-- BILD ERSETZEN: <img src="portrait.jpg" alt="Martin Löffke"> -->
+    <div class="about-portrait-placeholder">
+      <span style="color:#333; font-family:var(--font-disp); font-style:italic; font-size:0.85rem;">Portrait</span>
+    </div>
+    <div class="portrait-frame"></div>
+  </div>
+  <div class="about-text">
+    <div class="section-header">
+      <span class="section-label">Über mich</span>
+      <h2 class="section-title">Martin Löffke</h2>
+    </div>
+    <p>
+      → Diesen Text durch die echte Bio ersetzen. Hier steht, wer du bist, wie du arbeitest, was dich antreibt.
+    </p>
+    <p>
+      Ausstellungen, Stationen, Einflüsse — so kurz oder lang wie es sich richtig anfühlt.
+    </p>
+  </div>
+</section>
+
+<!-- KAUFEN -->
+<section id="kaufen">
+  <div class="section-header">
+    <span class="section-label">Kaufen</span>
+    <h2 class="section-title">Originale &amp; Drucke</h2>
+  </div>
+
+  <p class="shop-intro">
+    Alle Originale sind Einzelstücke. Drucke werden in kleinen signierten Auflagen herausgegeben. Anfragen per Mail — ich antworte persönlich, meist innerhalb eines Tages.
+  </p>
+
+  <div class="shop-grid">
+    <!-- PRODUKT 1 -->
+    <div class="shop-card">
+      <div class="shop-card-image">
+        <div class="shop-card-placeholder"></div>
+      </div>
+      <div class="shop-card-body">
+        <div class="shop-card-title">Ohne Titel I</div>
+        <div class="shop-card-details">Original · Öl auf Leinwand · 80 × 100 cm</div>
+        <div class="shop-card-price">1.800 €</div>
+        <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Ohne%20Titel%20I&body=Hallo%20Martin%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20das%20Werk%20%22Ohne%20Titel%20I%22.%0A%0A">
+          Anfragen
+        </a>
+      </div>
+    </div>
+    <!-- PRODUKT 2 -->
+    <div class="shop-card">
+      <div class="shop-card-image">
+        <div class="shop-card-placeholder"></div>
+      </div>
+      <div class="shop-card-body">
+        <div class="shop-card-title">Stille I — Druck</div>
+        <div class="shop-card-details">Giclée · signiert · Auflage 30 · 50 × 70 cm</div>
+        <div class="shop-card-price">180 €</div>
+        <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Stille%20I%20Druck&body=Hallo%20Martin%2C%0A%0Aich%20m%C3%B6chte%20gerne%20einen%20Druck%20von%20%22Stille%20I%22%20bestellen.%0A%0A">
+          Anfragen
+        </a>
+      </div>
+    </div>
+    <!-- PRODUKT 3 -->
+    <div class="shop-card">
+      <div class="shop-card-image">
+        <div class="shop-card-placeholder"></div>
+      </div>
+      <div class="shop-card-body">
+        <div class="shop-card-title">Licht von Norden</div>
+        <div class="shop-card-details">Original · Öl auf Holz · 60 × 80 cm</div>
+        <div class="shop-card-price">1.200 €</div>
+        <a class="btn-anfrage" href="mailto:martin@email.de?subject=Anfrage%3A%20Licht%20von%20Norden&body=Hallo%20Martin%2C%0A%0Aich%20interessiere%20mich%20f%C3%BCr%20das%20Werk%20%22Licht%20von%20Norden%22.%0A%0A">
+          Anfragen
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="shop-note">
+    <strong>Kein Onlineshop nötig.</strong> Anfragen kommen direkt per Mail — persönlich, unkompliziert, kostenlos. Versand und Zahlung werden individuell abgestimmt.
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="section-header">
+    <span class="section-label">Kontakt</span>
+    <h2 class="section-title">Schreib mir.</h2>
+  </div>
+  <p class="kontakt-sub">
+    Anfragen zu Werken, Ausstellungen, Auftragsarbeiten oder Atelierbesuchen — ich freue mich über jede Nachricht.
+  </p>
+  <div class="kontakt-links">
+    <a class="kontakt-link" href="mailto:martin@email.de">Per Mail</a>
+    <a class="kontakt-link" href="https://instagram.com/martin_loeffke" target="_blank">Instagram</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Martin Löffke</span>
+  <span>Alle Rechte vorbehalten</span>
+</footer>
+
+<script>
+  // Sperren: Löffke auf gleiche Breite wie Martin
+  function matchTitleWidth() {
+    const title = document.querySelector('.hero-title');
+    const last  = document.querySelector('.hero-title .name-last');
+    if (!title || !last) return;
+    // Breite der ersten Zeile = Breite des h1 (kein wrapping, single line)
+    // Messen über ein temporäres Canvas
+    const style = window.getComputedStyle(title);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = style.fontStyle + ' ' + style.fontWeight + ' ' + style.fontSize + ' ' + style.fontFamily;
+    const wMartin  = ctx.measureText('Martin').width;
+    const wLoeffke = ctx.measureText('Löffke').width;
+    const diff = wMartin - wLoeffke;
+    if (diff > 0 && wLoeffke > 0) {
+      // Extra-Spacing auf die Lücken zwischen den Zeichen verteilen (5 Lücken in "Löffke")
+      const extra = diff / 5;
+      last.style.letterSpacing = extra + 'px';
+    }
+  }
+  document.fonts.ready.then(matchTitleWidth);
+  window.addEventListener('resize', matchTitleWidth);
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.display = (filter === 'alle' || item.dataset.category === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    if (!img) return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
